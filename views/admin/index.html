@@ -1,0 +1,40 @@
+<html>
+	<head>
+		<title>{{ title }}</title>
+		<script type="text/javascript" src="/public/js/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="/public/js/admin.js"></script>
+	</head>
+	<style type="text/css">
+		*{padding:0;margin:0;}
+		.nav{padding:15px 0;}
+		.nav a{padding:0px 15px;}
+		.user-list{width:700px;margin:0 auto;}
+		.lists{width:100%;border-collapse: collapse;}
+		.lists td,.lists th{border:1px solid #ddd;padding:5 10px;text-align:center;}
+	</style>
+	<body>
+		<div class="user-list">
+			<nav class="nav">
+				<a href="/admin">首页</a>
+				<a href="/admin/userList">用户管理</a>
+				<a href="/admin/nodeList">栏目管理</a>
+				<a href="/admin/articlelist">内容管理</a>
+				<a href="/admin/comment">评论管理</a>
+			</nav>
+			<table class="lists" id="userList">
+				<tr>
+					<th>用户ID</th>
+					<th>用户名</th>
+					<th>操作</th>
+				</tr>
+				{% for v in userList %}<tr>
+					<td>{{ v.id }}</td>
+					<td>{{ v.userName }}</td>
+					<td><a data-id="{{ v._id.toString() }}" class="btn-del" href="javascript:;">删除</a></td>
+				</tr>
+				{% endfor %}
+			</table>
+			
+		</div>
+	</body>
+</html>

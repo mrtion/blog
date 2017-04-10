@@ -1,0 +1,90 @@
+<html>
+	<head>
+		<title>{{ title }}</title>
+		<script type="text/javascript" src="/public/js/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="/public/js/detail.js"></script>
+	</head>
+	<style type="text/css">
+		*{padding:0;margin:0;}
+		.site-nav{width:1000px;margin:0 auto;height:40px;line-height:40px;}
+		.site-nav a{padding:0 5px;}
+		.main{width:1000px;margin:0 auto;}
+		.contene ul li{padding:5px 0;}
+		.hd{text-align:center;height:30px;line-height:30px;}	
+		.rester-box{width:400px;margin:0 auto;}
+		.item{padding:10px 0;height:40px;line-height:40px;}
+		label.tit{display:inline-block;width:100px;text-align:right;}
+		.item input{width:250px;height:30px;line-height:30px;}
+		.rester-box .btn{}
+	</style>
+	<body>
+		<nav class="site-nav">
+			{% for v in nav %}
+			<a href="/list/{{ v.id }}">{{ v.nodeName }}</a>
+			{% endfor %}
+		</nav>
+
+		<div class="main">
+			<div class="contene">
+				<h1>{{ content.title }}</h1>
+				<div class="info">
+					作者：{{ content.author }}
+					来源：{{ content.source }}
+					发布时间：{{ content.upDated }}
+					所属分类：{{ nodeName }}
+				</div>
+				<div class="desc">
+					{{ content.desc }}
+				</div>
+				<div class="con">
+					{{ content.content }}
+				</div>
+				<!-- 评论 -->
+				<div class="comment">
+					<label><textarea id="commentCon" data-aId="{{content.id}}" data-aTitle="{{content.title}}" data-uName="{{userInfo.userName}}" data-uId="{{userInfo.id}}"></textarea></label>
+					<label><input type="button" id="submitBtn" value="提交" /></label>
+				</div>
+				<!-- 评论列表 -->
+				<div class="comment-list">
+					<ul>
+						{% for item in commentList %}
+						<li>
+							<p>用户：{{ item.userName }}</p>
+							<p>{{ item.content }}</p>
+							<p>时间：{{ item.upDated }}</p>
+						</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+			<div class="side">
+				{% if ( !userInfo) %}
+				<div class="rester-box" id="register" style="display:none;">
+					<div class="hd">注册</div>
+					<div class="item"><label class="tit">用户名：</label><label><input type="text" id="userName"></label></div>
+					<div class="item"><label class="tit">密码：</label><label><input type="password" id="password"></label></div>
+					<div class="item"><label class="tit">重复密码：</label><label><input type="password" id="repassword"></label></div>
+					<div class="item btn"><label class="tit"></label><input type="button" id="submit" value="注册"></div>
+				</div>
+				<div class="rester-box" id="login">
+					<div class="hd">登录</div>
+					<div class="item"><label class="tit">用户名：</label><label><input type="text" id="loginName"></label></div>
+					<div class="item"><label class="tit">密码：</label><label><input type="password" id="loginPassword"></label></div>
+					<div class="item btn"><label class="tit"></label><input type="button" id="loginBtn" value="登录"></div>
+				</div>
+				{% else %}
+				<div class="rester-box" id="userInfo">
+					<div class="hd">用户信息</div>
+					<div class="item"><label class="tit">用户名：</label><label id="uName">{{userInfo.userName}}</label></div>
+					{% if ( userInfo.userType != "1" ) %}
+					<div class="item">你好，欢迎来到火星！</div>
+					{% else %}
+					<div class="item">你好，欢迎来到火星！<a href="/admin">进入管理</a></div>
+					{% endif %}
+					<div class="item"><a href="javascript:;" id="loginout">退出</a></div>
+				</div>
+				{% endif %}
+			</div>
+		</div>
+	</body>
+</html>

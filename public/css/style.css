@@ -1,0 +1,51 @@
+@charset "utf-8";
+body,button,dd,dl,dt,form,h1,h2,h3,h4,h5,h6,input,legend,li,ol,p,select,table,textarea,ul{margin:0;padding:0;}
+body,button,input,select,textarea{font-family:'microsoft yahei',simsun,sans-serif;}
+button,input[type=button],input[type=submit],input[type=reset],label{-webkit-user-select:none;}
+button,input,select{box-sizing:content-box;}
+button{border:0;cursor:pointer;}
+li{list-style:none;}
+b,em,i{font-style:normal;font-weight:400}a{text-decoration:none;color:#2277da;}
+img{border:0;}
+.hide,.none{display:none;}
+body{font-size:16px;}
+/*公用样式*/
+a{color:#333;text-decoration:none;cursor:pointer;outline:none;}
+a:hover{color:#2479CC;text-decoration:none;}
+.clear,.clear-all,.clearbox{clear:both;}
+.clear-all{height:0px;line-height:0px;font-size:0px;}
+.clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
+.fl{float:left;}
+.fr{float:right;}
+
+/*side-nav*/
+.side-nav{width:250px;height:100%;position:fixed;background:#202020;overflow: auto;}
+.site-name{padding:40px 0 10px 0;}
+.site-name a{display: block;width:140px;margin:0 auto;}
+.site-name a img{display:block;width:140px;height:140px;background:#fff;border-radius:70px;}
+.site-name a span{display: block;padding: 10px 0;font-size: 18px;color: #999;text-align: center;}
+
+.com-nav li{display:block;height:45px;line-height:45px;font-size: 16px;}
+.com-nav li a{display:block;color:#999;text-align:center;}
+.com-nav li a:hover{color:#fff;}
+.com-nav li i{display:inline-block;width:25px;height:45px;padding-right:20px;}
+.com-nav li a *{vertical-align:middle;}
+
+.fast-tools{padding:20px 0;}
+.fast-tools li{width:50%;float:left;padding:0 15px; height:40px;line-height:40px;box-sizing:border-box;}
+.fast-tools li:first-child{text-align:right;}
+.fast-tools li a{color:#fff;font-size:14px;}
+
+
+.main{width:1200px;padding-left:290px;padding-right:40px;box-sizing:border-box;}
+
+
+.art-list{}
+.art-list li{position:relative;padding:30px 0;border-bottom: 1px solid #ddd;word-wrap: break-word;}
+.art-list .meta{position:absolute;right:0;font-size:14px;line-height:25px;text-align:right;color:#555;}
+.art-list .comment{color: #999;}
+.art-list .comment span{padding-right:5px;}
+.art-list .title{font-size:2em;font-weight: 300;line-height: 35px;margin-bottom:25px;}
+.art-list .source{margin:10px 0 0;padding:15px 20px;border-left:5px solid #2479CC;line-height:22px;background-color:#f8f8f8;}
+.art-list .desc{padding:15px 0;line-height:28px;}
+.art-list a{color: #2479CC;}

@@ -1,0 +1,54 @@
+<html>
+	<head>
+		<title>{{ title }}</title>
+		<script type="text/javascript" src="/public/js/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="/public/js/articlelist.js"></script>
+	</head>
+	<style type="text/css">
+		*{padding:0;margin:0;}
+		.nav{padding:15px 0;}
+		.nav a{padding:0px 15px;}
+		.add-node{padding-bottom:15px;line-height:30px;}
+		.user-list{width:700px;margin:0 auto;}
+		.lists{width:100%;border-collapse: collapse;}
+		.lists td,.lists th{border:1px solid #ddd;padding:5 10px;text-align:center;}
+	</style>
+	<body>
+		<div class="user-list">
+			<nav class="nav">
+				<a href="/admin">首页</a>
+				<a href="/admin/userList">用户管理</a>
+				<a href="/admin/nodeList">栏目管理</a>
+				<a href="/admin/articlelist">内容管理</a>
+				<a href="/admin/comment">评论管理</a>
+			</nav>
+			<div class="add-btn">
+				<a href="/admin/addArticle">添加文章</a>
+			</div>
+			<table class="lists" id="artList">
+				<tr>
+					<th>文章ID</th>
+					<th>文章标题</th>
+					<th>所属栏目</th>
+					<th>发布时间</th>
+					<th>操作</th>
+				</tr>
+				{% for v in artList %}<tr>
+					<td>{{ v.id }}</td>
+					<td>{{ v.title }}</td>
+					<td>{{ v.nodeName }}</td>
+					<td>{{ v.upDated }}</td>
+					<td><a data-id="{{ v._id.toString() }}" class="btn-del" href="javascript:;">删除</a></td>
+				</tr>
+				{% endfor %}
+			</table>
+			{%  if pages > 1 %}
+			<div class="page">
+				<a href="/admin/articlelist?page={{ page-1 }}">上一页</a>
+				<a href="/admin/articlelist?page={{ page+1 }}">下一页</a>
+				<span>总{{ count }}条数,总{{ pages }}页数,当前{{ page }}页</span>
+			</div>
+			{%  endif %}
+		</div>
+	</body>
+</html>

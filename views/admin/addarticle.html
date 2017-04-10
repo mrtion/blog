@@ -1,0 +1,69 @@
+<html>
+	<head>
+		<title>{{ title }}</title>
+		<script type="text/javascript" src="/public/js/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="/public/js/userList.js"></script>
+	</head>
+	<style type="text/css">
+		*{padding:0;margin:0;}
+		.nav{padding:15px 0;}
+		.nav a{padding:0px 15px;}
+		.add-node{padding-bottom:15px;line-height:30px;}
+		.user-list{width:700px;margin:0 auto;}
+		.add-arctle{}
+		.add-arctle .add-item{padding:15px 0;}
+		.add-arctle .add-item .tit{display:inline-block;width:100px;float:left;}
+		.add-arctle .add-item input{width:500px;height:30px;line-height:30px;}
+		.add-arctle .add-item textarea{width:500px;height:200px;}
+		.add-arctle .add-item input.submit-btn{width:200px;}
+		.add-arctle div.submit{text-align:center;}
+	</style>
+	<body>
+		<div class="user-list">
+			<nav class="nav">
+				<a href="/admin">首页</a>
+				<a href="/admin/userList">用户管理</a>
+				<a href="/admin/nodeList">栏目管理</a>
+				<a href="/admin/articlelist">内容管理</a>
+				<a href="/admin/comment">评论管理</a>
+			</nav>
+			<form class="add-arctle" action="/api/article/add" method="post">
+				<div class="add-item">
+					<label class="tit">文章标题：</label>
+					<input type="text" name="title" >
+				</div>
+				<div class="add-item">
+					<label class="tit">所属分类：</label>
+					<select name="nodeId">
+						<option value="">选择分类</option>	
+						{% for v in nodeList %}
+						<option value="{{v.id}}">{{v.nodeName}}</option>
+						{% endfor %}
+					</select>
+				</div>
+				<div class="add-item">
+					<label class="tit">作者：</label>
+					<input type="text" name="author" >
+				</div>
+				<div class="add-item">
+					<label class="tit">来源：</label>
+					<input type="text" name="source" >
+				</div>
+				<div class="add-item">
+					<label class="tit">简介：</label>
+					<textarea name="desc" ></textarea>
+				</div>
+				<div class="add-item">
+					<label class="tit">文章内容：</label>
+					<textarea name="content" ></textarea>
+				</div>
+				<div class="add-item submit">
+					<input class="submit-btn" type="submit" value="添加" />
+				</div>
+
+
+			</form>
+
+		</div>
+	</body>
+</html>
