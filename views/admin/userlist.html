@@ -1,52 +1,51 @@
-<html>
-	<head>
-		<title>{{ title }}</title>
-		<script type="text/javascript" src="/public/js/jquery-1.11.3.min.js"></script>
-		<script type="text/javascript" src="/public/js/userList.js"></script>
-	</head>
-	<style type="text/css">
-		*{padding:0;margin:0;}
-		.nav{padding:15px 0;}
-		.nav a{padding:0px 15px;}
-		.add-node{padding-bottom:15px;line-height:30px;}
-		.user-list{width:700px;margin:0 auto;}
-		.lists{width:100%;border-collapse: collapse;}
-		.lists td,.lists th{border:1px solid #ddd;padding:5 10px;text-align:center;}
-	</style>
-	<body>
-		<div class="user-list">
-			<nav class="nav">
-				<a href="/admin">首页</a>
-				<a href="/admin/userList">用户管理</a>
-				<a href="/admin/nodeList">栏目管理</a>
-				<a href="/admin/articlelist">内容管理</a>
-				<a href="/admin/comment">评论管理</a>
-			</nav>
-			<div class="add-node">
-				<label>用户名：<input type="text" id="userName"  /></label>
-				<label>用户密码：<input type="text" id="password" /></label>
-				<label><input type="button" id="submitUser" value="添加" /></label>
-			</div>
-			<table class="lists" id="userList">
-				<tr>
-					<th>用户ID</th>
-					<th>用户名称</th>
-					<th>操作</th>
-				</tr>
-				{% for v in userList %}<tr>
-					<td>{{ v.id }}</td>
-					<td>{{ v.userName }}</td>
-					<td><a data-id="{{ v._id.toString() }}" class="btn-del" href="javascript:;">删除</a></td>
-				</tr>
-				{% endfor %}
-			</table>
-			{%  if pages > 1 %}
-			<div class="page">
-				<a href="/admin/userList?page={{ page-1 }}">上一页</a>
-				<a href="/admin/userList?page={{ page+1 }}">下一页</a>
-				<span>总{{ count }}条数,总{{ pages }}页数,当前{{ page }}页</span>
-			</div>
-			{%  endif %}
+
+{% extends 'layout.html' %}
+
+{% block content %}
+	<div class="add-node layui-form">
+		<div class="layui-form-item">
+		    <div class="layui-inline">
+		      	<label class="layui-form-label">用户名</label>
+		      	<div class="layui-input-inline">
+		        	<input type="text" id="userName" autocomplete="off" class="layui-input">
+		      	</div>
+		    </div>
+		    <div class="layui-inline">
+		      	<label class="layui-form-label">用户密码</label>
+		      	<div class="layui-input-inline">
+		        	<input type="password" id="password" autocomplete="off" class="layui-input">
+		      	</div>
+		    </div>
+		    <div class="layui-inline">
+		      	<button type="button" id="submitUser" class="layui-btn">添加</button>
+		    </div>
 		</div>
-	</body>
-</html>
+	</div>
+    <div class="user-list mt20">
+		<table class="lists layui-table" id="userList">
+			<tr>
+				<th>用户ID</th>
+				<th>用户名</th>
+				<th>操作</th>
+			</tr>
+			{% for v in userList %}<tr>
+				<td>{{ v.id }}</td>
+				<td>{{ v.userName }}</td>
+				<td><a data-id="{{ v._id.toString() }}" class="btn-del" href="javascript:;">删除</a></td>
+			</tr>
+			{% endfor %}
+		</table>
+		{%  if pages > 1 %}
+		<div class="page">
+			<a href="/admin/articlelist?page={{ page-1 }}">上一页</a>
+			<a href="/admin/articlelist?page={{ page+1 }}">下一页</a>
+			<span>总{{ count }}条数,总{{ pages }}页数,当前{{ page }}页</span>
+		</div>
+		{%  endif %}
+	</div>
+{% endblock %}
+
+
+{% block script %}
+	<script type="text/javascript" src="/public/js/userList.js"></script>
+{% endblock %}

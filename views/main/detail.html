@@ -1,57 +1,105 @@
+<!doctype html>
 <html>
 	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<title>{{ title }}</title>
+		<link rel="stylesheet" type="text/css" href="/public/css/style.css" />
 		<script type="text/javascript" src="/public/js/jquery-1.11.3.min.js"></script>
 		<script type="text/javascript" src="/public/js/detail.js"></script>
 	</head>
-	<style type="text/css">
-		*{padding:0;margin:0;}
-		.site-nav{width:1000px;margin:0 auto;height:40px;line-height:40px;}
-		.site-nav a{padding:0 5px;}
-		.main{width:1000px;margin:0 auto;}
-		.contene ul li{padding:5px 0;}
-		.hd{text-align:center;height:30px;line-height:30px;}	
-		.rester-box{width:400px;margin:0 auto;}
-		.item{padding:10px 0;height:40px;line-height:40px;}
-		label.tit{display:inline-block;width:100px;text-align:right;}
-		.item input{width:250px;height:30px;line-height:30px;}
-		.rester-box .btn{}
-	</style>
 	<body>
-		<nav class="site-nav">
-			{% for v in nav %}
-			<a href="/list/{{ v.id }}">{{ v.nodeName }}</a>
-			{% endfor %}
+		<!--  -->
+		<nav class="side-nav">
+			<h1 class="site-name">
+				<a href="/"><img src="https://75team.com/static/upload/20170409/logo.svg"><span>网首名称</span></a>
+			</h1>
+			<!-- 导航 -->
+			<ul class="com-nav">
+				<li>
+					<a href="/"><span>首页</span></a>
+				</li>
+				{% for v in nav %}
+				<li>
+					<a href="/list/{{ v.id }}"><span>{{ v.nodeName }}</span></a>
+				</li>
+				{% endfor %}
+			</ul>
+			<ul class="fast-tools clearfix">
+				<li><a href="#">登录</a></li>
+				<li><a href="#">注册</a></li>
+			</ul>
 		</nav>
 
 		<div class="main">
+
 			<div class="contene">
-				<h1>{{ content.title }}</h1>
-				<div class="info">
-					作者：{{ content.author }}
-					来源：{{ content.source }}
-					发布时间：{{ content.upDated }}
-					所属分类：{{ nodeName }}
+				<!-- 文章详情 -->
+				<div class="article-content">
+					<h1 class="title">{{ content.title }}</h1>
+					<!-- <div class="info">
+						作者：{{ content.author }}
+						来源：{{ content.source }}
+						发布时间：{{ content.upDated }}
+						所属分类：{{ nodeName }}
+					</div> -->
+					<div class="meta">
+						<div class="other">
+							<span class="author">{{ content.author }}</span>
+							发布于
+							<span class="author">5月15日,2016年</span>
+						</div>
+						<div class="comment">
+							<span class="number">25</span>comments
+						</div>
+					</div>
+					<div class="source">来源：<a class="detail" href="#">{{ content.source }}</a></div>
+					<div class="con">
+						{{ content.content }}
+					</div>
+					<div class="post-info">
+			            作者 <code class="notebook">akira_cn</code> 发表于<i>2017-03-07 09:29:50</i>
+			        </div>
 				</div>
-				<div class="desc">
-					{{ content.desc }}
-				</div>
-				<div class="con">
-					{{ content.content }}
-				</div>
+				<nav class="pagination">
+                	<a href="#" class="prev">« 轻松管理你的 Node 版本</a>
+                	<a href="#" class="next">使用 webpack2 和 NPM Scripts 进行 JavaScript 组件开发 »</a>
+        		</nav>
 				<!-- 评论 -->
-				<div class="comment">
-					<label><textarea id="commentCon" data-aId="{{content.id}}" data-aTitle="{{content.title}}" data-uName="{{userInfo.userName}}" data-uId="{{userInfo.id}}"></textarea></label>
-					<label><input type="button" id="submitBtn" value="提交" /></label>
+				<div class="comments">
+					<h2 class="title">Comments</h2>
+					<div class="comments-input">
+						<div class="hd">
+							<span class="comments-num fr"><i>2</i> 人参与</span>
+							<h3 class="title">发布评论</h3>
+						</div>
+						<div class="bd">
+							<textarea class="tie-textarea" id="commentCon" data-aId="{{content.id}}" data-aTitle="{{content.title}}" data-uName="{{userInfo.userName}}" data-uId="{{userInfo.id}}" placeholder="请输出内容"></textarea>
+							<div class="user-info">
+								{% if ( userInfo) %}
+								<p class="be-login">你好：<i>{{userInfo.userName}}</i></p>
+								{% else %}
+								<p class="af-login">你还没有登录：<a href="javascript:;" id="loginBtn">请点击登录</a></p>
+								{% endif %}
+							</div>
+							<label class="sub-btn"><input type="button" id="submitBtn" value="提交" /></label>
+						</div>
+					</div>
+					
 				</div>
 				<!-- 评论列表 -->
-				<div class="comment-list">
-					<ul>
+				<div class="comments-list">
+					<ul class="lists">
 						{% for item in commentList %}
-						<li>
-							<p>用户：{{ item.userName }}</p>
-							<p>{{ item.content }}</p>
-							<p>时间：{{ item.upDated }}</p>
+						<li class="clearfix">
+							<div class="avatar fl">
+								<img src="/public/images/avatar.jpg" />
+							</div>
+							<div class="comment-com">
+								<span class="user">{{ item.userName }}</span>
+								<span class="time">时间：{{ item.upDated }}</span>
+								<p class="con">{{ item.content }}</p>
+							</div>
 						</li>
 						{% endfor %}
 					</ul>

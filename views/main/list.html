@@ -1,46 +1,66 @@
+<!doctype html>
 <html>
 	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<title>{{ title }}</title>
+		<link rel="stylesheet" type="text/css" href="/public/css/style.css" />
 		<script type="text/javascript" src="/public/js/jquery-1.11.3.min.js"></script>
 		<script type="text/javascript" src="/public/js/index.js"></script>
 	</head>
-	<style type="text/css">
-		*{padding:0;margin:0;}
-		.site-nav{width:1000px;margin:0 auto;height:40px;line-height:40px;}
-		.site-nav a{padding:0 5px;}
-		.main{width:1000px;margin:0 auto;}
-		.contene ul li{padding:5px 0;}
-		.hd{text-align:center;height:30px;line-height:30px;}	
-		.rester-box{width:400px;margin:0 auto;}
-		.item{padding:10px 0;height:40px;line-height:40px;}
-		label.tit{display:inline-block;width:100px;text-align:right;}
-		.item input{width:250px;height:30px;line-height:30px;}
-		.rester-box .btn{}
-	</style>
 	<body>
-		<nav class="site-nav">
-			{% for v in nav %}
-			<a href="/list/{{ v.id }}">{{ v.nodeName }}</a>
-			{% endfor %}
+		<!--  -->
+		<nav class="side-nav">
+			<h1 class="site-name">
+				<a href="/"><img src="https://75team.com/static/upload/20170409/logo.svg"><span>网首名称</span></a>
+			</h1>
+			<!-- 导航 -->
+			<ul class="com-nav">
+				<li>
+					<a href="/"><span>首页</span></a>
+				</li>
+				{% for v in nav %}
+				<li>
+					<a href="/list/{{ v.id }}"><span>{{ v.nodeName }}</span></a>
+				</li>
+				{% endfor %}
+			</ul>
+			<ul class="fast-tools clearfix">
+				<li><a href="#">登录</a></li>
+				<li><a href="#">注册</a></li>
+			</ul>
 		</nav>
 
 		<div class="main">
+
 			<div class="contene">
-				<ul>
+				<!-- 列表 -->
+				<ul class="art-list">
 					{% for item in artList %}
 					<li>
-						<h2><a href="/detail/{{ item.id }}">{{ item.title }}</a></h2>
-						<p>{{ item.desc }}</p>
-						<p>{{ item.upDated }}</p>
+						<div class="meta">
+							<div class="other">
+								<span class="author">{{ item.author }}</span>
+								发布于
+								<span class="author">5月15日,2016年</span>
+							</div>
+							<div class="comment">
+								<span class="number">25</span>comments
+							</div>
+						</div>
+						<h2 class="title"><a href="/detail/{{ item.id }}">{{ item.title }}</a></h2>
+						<p class="source">来源：<a class="detail" href="#">ddddd</a></p>
+						<p class="desc">{{ item.desc }}</p>
+						<a class="detail" href="/detail/{{ item.id }}">阅读全文 »</a>
 					</li>
 					{% endfor %}
 
 				</ul>
 				{%  if pages > 1 %}
 				<div class="page">
-					<a href="{{ path }}?page={{ page-1 }}">上一页</a>
-					<a href="{{ path }}?page={{ page+1 }}">下一页</a>
-					<span>总{{ count }}条数,每页显示{{ limit }}条,总{{ pages }}页数,当前{{ page }}页</span>
+					<a href="/?page={{ page-1 }}">上一页</a>
+					<a href="/?page={{ page+1 }}">下一页</a>
+					<span>总{{ count }}条数,总{{ pages }}页数,当前{{ page }}页</span>
 				</div>
 				{%  endif %}
 			</div>

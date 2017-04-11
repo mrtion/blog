@@ -196,7 +196,7 @@ router.post("/node/del",(req,res) => {
 
 //添加文章
 router.post('/article/add',(req,res) => {
-
+	console.log(req.body);
 	new Articles({
 		nodeId: req.body.nodeId,
 		title: req.body.title,
@@ -207,11 +207,13 @@ router.post('/article/add',(req,res) => {
 		upDate: Date()
 	}).save(function(e){
 		if(e){
-			res.send("添加失败");
+			resData.sts = 0;
+			resData.info = '添加失败';
 		}else{
-			console.log(e);
-			res.send('添加成功<a href="/admin/articlelist">返回列表</a>');
+			resData.sts = 1;
+			resData.info = '添加成功';
 		}
+		res.status(200).json(resData);
 	})
 
 	

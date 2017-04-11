@@ -84,3 +84,4 @@ mongoose.connect('mongodb://localhost/blog',(err) => {
 	}
 });
 app.listen(8888);
+console.log('8888');
