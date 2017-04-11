@@ -1,9 +1,9 @@
-{% extends 'layout.html' %}
+{% extends '../layout.html' %}
 
 {% block content %}
-	<div class="add-btn">
-		<a href="/admin/addArticle">添加文章</a>
-	</div>
+	<fieldset class="layui-elem-field layui-field-title">
+  		<legend>文章内容列表</legend>
+	</fieldset>
     <div class="art-list mt20">
 		<table class="lists layui-table" id="artList">
 			<tr>

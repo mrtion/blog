@@ -22,11 +22,11 @@ router.use(function(req,res,next){
 
 //注册接口
 router.post('/user/register',(req,res,next) =>{
-	console.log(req.body);
-
+	
 	let userName = req.body.userName;
 	let password = req.body.password;
 	let repassword = req.body.repassword;
+	let userType = req.body.userType ? req.body.userType : "0";
 
 	if(userName == ''){
 		resData.sts = 0;
@@ -51,8 +51,6 @@ router.post('/user/register',(req,res,next) =>{
 	}else{
 		//判断当前用户是否被注册
 		User.findOne({"userName": userName },function(e,d){
-			console.log(d)
-
 			//res.status(200).json(resData)
 			if(d){
 				resData.sts = 0;
@@ -62,7 +60,7 @@ router.post('/user/register',(req,res,next) =>{
 				new User({
 					"userName" : userName,
 					"password" : password,
-					"userType" : 0
+					"userType" : userType
 				}).save(function(e){
 					if(e){
 						resData.sts = 0;

@@ -1,8 +1,11 @@
 
-{% extends 'layout.html' %}
+{% extends '../layout.html' %}
 
 {% block content %}
-	<div class="add-node layui-form">
+	<fieldset class="layui-elem-field layui-field-title">
+  		<legend>用户列表</legend>
+	</fieldset>
+	<div class="add-node layui-form mt20" style="display:none;">
 		<div class="layui-form-item">
 		    <div class="layui-inline">
 		      	<label class="layui-form-label">用户名</label>
@@ -26,12 +29,12 @@
 			<tr>
 				<th>用户ID</th>
 				<th>用户名</th>
-				<th>操作</th>
+				<th width="100">操作</th>
 			</tr>
 			{% for v in userList %}<tr>
 				<td>{{ v.id }}</td>
 				<td>{{ v.userName }}</td>
-				<td><a data-id="{{ v._id.toString() }}" class="btn-del" href="javascript:;">删除</a></td>
+				<td><a href="/admin/setUser?userId={{ v.id }}">编辑</a>  <a data-id="{{ v.id }}" class="btn-del" href="javascript:;">删除</a></td>
 			</tr>
 			{% endfor %}
 		</table>

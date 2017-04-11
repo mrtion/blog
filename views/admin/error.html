@@ -1,0 +1,8 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <fieldset class="layui-elem-field layui-field-title">
+  		<legend>出错了</legend>
+	</fieldset>
+	<blockquote class="layui-elem-quote">{{ info }} {% if url %} <a href="{{ url }}">{{ urlName }}</a> {% endif %}</blockquote>
+{% endblock %}
