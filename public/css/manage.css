@@ -10,6 +10,13 @@ img{border:0;}
 .hide,.none{display:none;}
 .w1000{width:1000px;margin:0 auto;}
 .mt20{margin-top:20px;}
+.clear,.clear-all,.clearbox{clear:both;}
+.clear-all{height:0px;line-height:0px;font-size:0px;}
+.clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
+.fl{float:left;}
+.fr{float:right;}
 
-.side-nav{padding:10px 0;background-color:#393D49;}
+.header{background-color:#393D49;}
+.header .side-title{padding:0 40px;height:60px;line-height:60px;font-size:20px;color:#fff;background-color:#3f4148;}
 .main{padding:20px 0;}
+

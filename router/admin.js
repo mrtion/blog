@@ -3,7 +3,6 @@ const express = require('express');
 const moment = require('moment');
 const router = express.Router();
 
-
 //用户模型
 const User = require('../model/users');
 //栏目模型
@@ -15,7 +14,7 @@ const Comments = require('../model/comments');
 
 /*
 *  判读当前用户是不是admin
-*  不跳到首台首页
+*  不是跳到前台首页
 */
 router.get('/*',function(req,res,next){
 	if(req.userInfo.userName != 'admin'){
@@ -28,7 +27,6 @@ router.get('/*',function(req,res,next){
 
 //后台首页
 router.get('/',function(req,res){
-
 	var indexObj = {
 		userTotal:0,
 		nodes: [],
@@ -52,10 +50,10 @@ router.get('/',function(req,res){
 		indexObj.commentTotal = commentTotal ? commentTotal : 0;
 		res.render('./admin/index.html',{
 			"title":"后台首页",
-			"indexObj" : indexObj
+			"indexObj": indexObj,
+			"current": "index"
 		})
 	})
-
 })
 
 //用户管理列表
@@ -81,12 +79,14 @@ router.get('/userList/',(req,res) => {
 			"userList" : lists,
 			"page": page,
 			"pages": pages,
-			"count": count
+			"count": count,
+			"current": "users"
 		})
 	},(e) => {
 		res.render('./admin/users/userlist.html',{
 			"title":"用户管理",
-			"userList" : []
+			"userList" : [],
+			"current": "users"
 		});
 	}).catch((e) => {
 		console.log(e);
@@ -107,7 +107,8 @@ router.get('/setUser',(req,res) =>{
 			if(uDetail){
 				res.render('./admin/users/setUser.html',{
 					title: "编辑用户",
-					userDetail: uDetail
+					userDetail: uDetail,
+					"current": "users"
 				})
 			}else{
 				Promise.reject();
@@ -117,13 +118,15 @@ router.get('/setUser',(req,res) =>{
 				title: "出错了！",
 				info: "不存在的用户ID",
 				url: "/admin/userList",
-				urlName: "返回列表"
+				urlName: "返回列表",
+				"current": "users"
 			})
 		});
 	}else{
 		res.render('./admin/users/setUser.html',{
 			title: "添加用户",
-			userDetail: null
+			userDetail: null,
+			"current": "users"
 		})
 	}	
 });
@@ -216,12 +219,14 @@ router.get('/nodeList/',(req,res) => {
 		let nodeList = d ? d : [];
 		res.render('./admin/nodes/nodelist.html',{
 			"title":"栏目管理",
-			"nodeList" : nodeList
+			"nodeList" : nodeList,
+			"current": "nodes"
 		})
 	},function(e){
 		res.render('./admin/nodes/nodelist.html',{
 			"title":"栏目管理",
-			"nodeList" : []
+			"nodeList" : [],
+			"current": "nodes"
 		})
 	});
 });
@@ -240,7 +245,8 @@ router.get('/setNode',(req,res) => {
 			if(nDetail){
 				res.render('./admin/nodes/setNode.html',{
 					title: "编辑栏目",
-					nDetail: nDetail
+					nDetail: nDetail,
+					"current": "nodes"
 				})
 			}else{
 				Promise.reject();
@@ -250,13 +256,15 @@ router.get('/setNode',(req,res) => {
 				title: "出错了！",
 				info: "不存在的栏目ID",
 				url: "/admin/nodeList",
-				urlName: "返回列表"
+				urlName: "返回列表",
+				"current": "nodes"
 			})
 		});
 	}else{
 		res.render('./admin/nodes/setNode.html',{
 			title: "添加栏目",
-			nDetail: null
+			nDetail: null,
+			"current": "nodes"
 		})
 	}
 });
@@ -333,7 +341,6 @@ router.get(/^(\/articlelist)+(\/(\w)+)?$/,(req,res) => {
 	let artList = [];
 	let nodeNames = {};
 	let id = req.params[1] ? req.params[1].substr(1) : '';
-	//console.log(id)
 	let param = id ? {nodeId:id} : {};  //查询条件
 	let count = 1;
 	let limit = 10; 	//每页显示的条数
@@ -350,11 +357,9 @@ router.get(/^(\/articlelist)+(\/(\w)+)?$/,(req,res) => {
 		page = page > 1 ? page > pages ? pages : page : 1;
 		skip = (page - 1) * limit;
 		//获取当前查询条件下文章列表
-		return Articles.find(param).skip(skip).limit(limit).populate('nodeId');
+		return Articles.find(param).sort({_id:-1}).skip(skip).limit(limit).populate('nodeId');
 	}).then( (lists) => {	//
 		if(lists){
-			//console.log(lists)
-
 			lists.forEach((item)=>{
 				item.updated = moment(item['upDate']).format("YYYY-MM-DD HH:mm:ss");
 			});
@@ -365,7 +370,8 @@ router.get(/^(\/articlelist)+(\/(\w)+)?$/,(req,res) => {
 				artList: artList,
 				"page": page,
 				"pages": pages,
-				"count": count
+				"count": count,
+				"current": "articles"
 			})
 		}else{
 			Promise.reject();
@@ -376,11 +382,10 @@ router.get(/^(\/articlelist)+(\/(\w)+)?$/,(req,res) => {
 			artList: artList,
 			"page": page,
 			"pages": pages,
-			"count": count
+			"count": count,
+			"current": "articles"
 		})
-	});
-
-	
+	});	
 });
 
 //添加文章
@@ -400,7 +405,8 @@ router.get('/addArticle',(req,res) => {
 	},function(e){
 		res.render('./admin/articles/addarticle.html',{
 			title: tit,
-			btn: btn
+			btn: btn,
+			"current": "articles"
 		})
 	}).then((detail) => {
 		if(detail){
@@ -415,7 +421,9 @@ router.get('/addArticle',(req,res) => {
 			title: tit,
 			nodeList: nodeList,
 			artDetail: artDetail,
-			btn: btn
+			btn: btn,
+			"current": "articles"
+
 		})
 	});	
 });
@@ -423,7 +431,6 @@ router.get('/addArticle',(req,res) => {
 
 //评价管理
 router.get('/comment',(req,res) => {
-
 	//获取评论列表
 	let count = 0;
 	let limit = 10; 	//每页显示的条数
@@ -439,7 +446,7 @@ router.get('/comment',(req,res) => {
 		page = page > 1 ? page > pages ? pages : page : 1;
 		skip = (page - 1) * limit;
 		//获取评论列表
-		return Comments.find({}).skip(skip).limit(limit).populate('articleId userId');
+		return Comments.find({}).sort({_id:-1}).skip(skip).limit(limit).populate('articleId userId');
 
 	}).then((d) => {
 		d.forEach( (item) => {
@@ -454,7 +461,8 @@ router.get('/comment',(req,res) => {
 			page: page,
 			pages: pages,
 			count: count,
-			limit: limit
+			limit: limit,
+			"current": "comment"
 		})
 	});
 });

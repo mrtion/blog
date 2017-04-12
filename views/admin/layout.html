@@ -8,32 +8,33 @@
     <link rel="stylesheet" type="text/css" href="/public/css/manage.css">
 </head>
 <body>
-	<header class="side-nav">
-		<div class="w1000">
-			<ul class="layui-nav">
-			  	<li class="layui-nav-item"><a href="/admin">首页</a></li>
-			  	<li class="layui-nav-item">
+	<header class="header">
+		<div class="nav w1000 clearfix">
+			<h2 class="side-title fl">后台管理</h2>
+			<ul class="layui-nav fl">
+			  	<li class="layui-nav-item {% if current == 'index' %} layui-this {% endif %}" ><a href="/admin">首页</a></li>
+			  	<li class="layui-nav-item {% if current == 'users' %} layui-this {% endif %}">
 			    	<a href="/admin/userList">用户管理</a>
 				    <dl class="layui-nav-child">
 				      	<dd><a href="/admin/userList">用户列表</a></dd>
 				      	<dd><a href="/admin/setUser">添加用户</a></dd>
 				    </dl>
 			 	</li>
-			  	<li class="layui-nav-item">
+			  	<li class="layui-nav-item {% if current == 'nodes' %} layui-this {% endif %}">
 			    	<a href="/admin/nodeList">栏目管理</a>
 				    <dl class="layui-nav-child">
 				      	<dd><a href="/admin/nodeList">栏目列表</a></dd>
 				      	<dd><a href="/admin/setNode">添加栏目</a></dd>
 				    </dl>
 			 	</li>
-			 	<li class="layui-nav-item">
+			 	<li class="layui-nav-item {% if current == 'articles' %} layui-this {% endif %}">
 			    	<a href="/admin/articlelist">内容管理</a>
 				    <dl class="layui-nav-child">
 				      	<dd><a href="/admin/articlelist">内容列表</a></dd>
 				      	<dd><a href="/admin/addArticle">添加内容</a></dd>
 				    </dl>
 			 	</li>
-			 	<li class="layui-nav-item"><a href="/admin/comment">评论管理</a></li>
+			 	<li class="layui-nav-item {% if current == 'comment' %} layui-this {% endif %}"><a href="/admin/comment">评论管理</a></li>
 			</ul>
 		</div>
 	</header>
