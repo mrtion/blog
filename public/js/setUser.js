@@ -20,7 +20,5 @@ layui.use(['form', 'layedit', 'laydate'], function(){
   	//监听提交
   	form.on('submit(demo1)', function(data){
   		
-  	});
-  
-  
+  	});  
 });

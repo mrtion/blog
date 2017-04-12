@@ -5,7 +5,7 @@
   		<legend>评论列表</legend>
 	</fieldset>
     <div class="art-list mt20">
-		<table class="lists layui-table" id="artList">
+		<table class="lists layui-table" id="commList">
 			<tr>
 				<th>评论ID</th>
 				<th>评论人</th>
@@ -16,9 +16,9 @@
 			{% for v in CommentList %}
 			<tr>
 				<td>{{ v.id }}</td>
-				<td>{{ v.userName }}</td>
-				<td>{{ v.articleTitle }}</td>
-				<td>{{ v.upDated }}</td>
+				<td>{{ v.userId.userName }}</td>
+				<td>{{ v.articleId.title }}</td>
+				<td>{{ v.updated }}</td>
 				<td><a data-id="{{ v.id }}" class="btn-del" href="javascript:;">删除</a></td>
 			</tr>
 			{% endfor %}
@@ -35,5 +35,5 @@
 
 
 {% block script %}
-	<script type="text/javascript" src="/public/js/articlelist.js"></script>
+	<script type="text/javascript" src="/public/js/commentList.js"></script>
 {% endblock %}

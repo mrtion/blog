@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 //用户模型
-const User = require('../module/users');
+const User = require('../model/users');
 //栏目模型
-const Nodes = require('../module/nodes');
+const Nodes = require('../model/nodes');
 //文章模型
-const Articles = require('../module/articles');
+const Articles = require('../model/articles');
 //评论模型
-const Comments = require('../module/comments');
+const Comments = require('../model/comments');
 
 let resData;
 
@@ -192,29 +192,45 @@ router.post("/node/del",(req,res) => {
 
 });
 
-//添加文章
+/*
+*  	添加或编辑文章
+*	当aId 存在时为编辑,否则来新增
+*/
 router.post('/article/add',(req,res) => {
-	console.log(req.body);
-	new Articles({
-		nodeId: req.body.nodeId,
-		title: req.body.title,
-		author: req.body.author,
-		desc: req.body.desc,
-		source: req.body.source,
-		content: req.body.content,
-		upDate: Date()
-	}).save(function(e){
-		if(e){
-			resData.sts = 0;
-			resData.info = '添加失败';
-		}else{
-			resData.sts = 1;
-			resData.info = '添加成功';
-		}
-		res.status(200).json(resData);
-	})
-
-	
+	let aId = req.body.aId ? req.body.aId : '';
+	let subData = {
+			nodeId: req.body.nodeId,
+			title: req.body.title,
+			author: req.body.author,
+			desc: req.body.desc,
+			source: req.body.source,
+			content: req.body.content,
+			upDate: new Date()
+		};
+	//
+	if(!aId){
+		new Articles(subData).save(function(e){
+			if(e){
+				resData.sts = 0;
+				resData.info = '添加失败';
+			}else{
+				resData.sts = 1;
+				resData.info = '添加成功';
+			}
+			res.status(200).json(resData);
+		});
+	}else{
+		Articles.update({_id: aId},subData,(e) =>{
+			if(e){
+				resData.sts = 0;
+				resData.info = '编辑失败';
+			}else{
+				resData.sts = 1;
+				resData.info = '编辑成功';
+			}
+			res.status(200).json(resData);
+		});
+	}
 });
 
 //删除文章
@@ -266,6 +282,24 @@ router.post("/comment/add",(req,res) => {
 		}
 	})
 })
+//删除评论
+// param {cId} 
+// cId :评论Id
+router.post('/comment/del',(req,res) =>{
+	let cId = req.body.cId;
 
+	Comments.findByIdAndRemove({_id: cId},(err) => {
+		if(err){
+			resData.sts = 0;
+			resData.info = '删除失败，请稍后再试';
+			res.status(404).json(resData)
+		}else{
+			resData.sts = 1;
+			resData.info = '删除成功';
+			res.status(200).json(resData)
+		}
+	});
+
+});
 
 module.exports = router;

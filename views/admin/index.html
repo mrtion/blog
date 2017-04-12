@@ -1,25 +1,48 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-    <div class="user-list">
-		<table class="lists layui-table" id="userList">
-			<tr>
-				<th>用户ID</th>
-				<th>用户名</th>
-				<th>操作</th>
-			</tr>
-			{% for v in userList %}
-			<tr>
-				<td>{{ v.id }}</td>
-				<td>{{ v.userName }}</td>
-				<td><a data-id="{{ v._id.toString() }}" class="btn-del" href="javascript:;">删除</a></td>
-			</tr>
-			{% endfor %}
-		</table>
+    <fieldset class="layui-elem-field layui-field-title">
+  		<legend>后台首页</legend>
+	</fieldset>
+	<div class="admin-main">
+		<div class="item">
+			<fieldset class="layui-elem-field">
+			  	<legend>用户数</legend>
+			  	<div class="layui-field-box">
+			    用户总数：{{ indexObj.userTotal }}
+			  	</div>
+			</fieldset>
+		</div>
+		<div class="item">
+			<fieldset class="layui-elem-field">
+			  	<legend>栏目分类</legend>
+			  	<div class="layui-field-box">
+			    	<ul>
+			    		{% for item in indexObj.nodes %}
+			    		<li><a target="_blank" href="/list/{{ item.id }}">{{ item.nodeName }}</a></li>
+			    		{%  endfor %}
+			    	</ul>
+			  	</div>
+			</fieldset>
+		</div>
+		<div class="item">
+			<fieldset class="layui-elem-field">
+			  	<legend>文章数</legend>
+			  	<div class="layui-field-box">
+			    	总文章数：{{ indexObj.artTotal }}
+			  	</div>
+			</fieldset>
+		</div>
+		<div class="item">
+			<fieldset class="layui-elem-field">
+			  	<legend>文章评论数</legend>
+			  	<div class="layui-field-box">
+			    	总文章评论数：{{ indexObj.commentTotal }}
+			  	</div>
+			</fieldset>
+		</div>
+
 	</div>
-{% endblock %}
 
 
-{% block script %}
-	<script type="text/javascript" src="/public/js/admin.js"></script>
 {% endblock %}

@@ -4,9 +4,9 @@ const moment = require('moment');
 const router = express.Router();
 
 //文章模型
-const Articles = require('../module/articles');
+const Articles = require('../model/articles');
 //评论模型
-const Comments = require('../module/comments');
+const Comments = require('../model/comments');
 
 //首页
 router.get('/',(req,res,next) =>{
@@ -121,7 +121,7 @@ router.get('/detail/:id' ,(req,res) => {
 	let nodeName = ''
 
 	Articles.findById(ArtId).then((d) => {
-		 nodeList = req.navList;
+		nodeList = req.navList;
 		if(d){
 			detail = d;
 			detail['upDated'] = moment(detail['upDate']).format("YYYY-MM-DD HH:mm:ss");
@@ -131,6 +131,8 @@ router.get('/detail/:id' ,(req,res) => {
 				nodeName = item.nodeName;
 			}
 		});
+
+		console.log(detail)
 
 		Comments.find({articleId : detail.id}).then(function(c){
 

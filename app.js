@@ -1,14 +1,13 @@
 let express = require('express');
-let router = require('./router/router.js');
 let swig = require('swig');
 let mongoose = require('mongoose');
 let bodyParser = require('body-parser');
 let Cookies = require('cookies');
 
 //用户模型
-let User = require('./module/users');
+let User = require('./model/users');
 //栏目模型
-let Nodes = require('./module/nodes');
+let Nodes = require('./model/nodes');
 
 
 let adminRouter = require('./router/admin.js');
@@ -36,51 +35,41 @@ app.use( bodyParser.urlencoded({ extended: false }) );
 //获取用户信息
 app.use( (req,res,next) =>{
 	req.cookie = new Cookies(req,res);
-	//console.log(req.cookie.get('userInfo'))
 	req.userInfo = null;
 	if(req.cookie.get('userInfo')){
 		try{
 			req.userInfo = JSON.parse(req.cookie.get('userInfo'));
 			User.findById(req.userInfo.id).then(function(d){
-				
 				req.userInfo.userType = d.userType;
-
-				//console.log(req.userInfo);
+				next()
 			});
-
 		}catch(e){
 			console.log(e);
 		}
-		
 	}
-
-	next()
+	
 } );
 
 //获取导航
 app.use((req,res,next) => {
 	req.navList = []
-	Nodes.find({},function(e,navList){
+	Nodes.find({},(e,navList) => {
 		if(navList){
 			req.navList = navList;
 		}
-	})
-	next();
-})
-
-// //首页
-// app.get('/',router.index)
-
-app.use('/admin',adminRouter);
-app.use('/api',apiRouter);
-app.use('/',mainRouter);
-
+		next();
+	});
+});
+//路由
+app.use('/admin',adminRouter);	//后台路由
+app.use('/api',apiRouter);	//API路由
+app.use('/',mainRouter);	//前台路由
 
 mongoose.connect('mongodb://localhost/blog',(err) => {
 	if(err){
-		console.log('sb');
+		console.log('connect fail!');
 	}else{
-		console.log('cg');
+		console.log('connect success!');
 	}
 });
 app.listen(8888);

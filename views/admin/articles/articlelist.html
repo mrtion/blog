@@ -13,12 +13,12 @@
 				<th>发布时间</th>
 				<th>操作</th>
 			</tr>
-			{% for v in artList %}<tr>
-				<td>{{ v.id }}</td>
-				<td>{{ v.title }}</td>
-				<td>{{ v.nodeName }}</td>
-				<td>{{ v.upDated }}</td>
-				<td><a data-id="{{ v._id.toString() }}" class="btn-del" href="javascript:;">删除</a></td>
+			{% for item in artList %}<tr>
+				<td>{{ item.id }}</td>
+				<td>{{ item.title }}</td>
+				<td>{{ item.nodeId.nodeName }}</td>
+				<td>{{ item.updated }}</td>
+				<td><a href="/admin/addArticle?artId={{ item.id }}">编辑</a> <a data-id="{{ item.id }}" class="btn-del" href="javascript:;">删除</a></td>
 			</tr>
 			{% endfor %}
 		</table>

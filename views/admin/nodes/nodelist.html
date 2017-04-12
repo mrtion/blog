@@ -30,13 +30,13 @@
 				<th>栏目ID</th>
 				<th>栏目名称</th>
 				<th>栏目描述</th>
-				<th>操作</th>
+				<th width="100">操作</th>
 			</tr>
-			{% for v in nodeList %}<tr>
-				<td>{{ v.id }}</td>
-				<td>{{ v.nodeName }}</td>
-				<td>{{ v.nodeDesc }}</td>
-				<td><a data-id="{{ v._id.toString() }}" class="btn-del" href="javascript:;">删除</a></td>
+			{% for item in nodeList %}<tr>
+				<td>{{ item.id }}</td>
+				<td>{{ item.nodeName }}</td>
+				<td>{{ item.nodeDesc }}</td>
+				<td><a href="/admin/setNode?nodeId={{ item.id }}">编辑</a>  <a data-id="{{ item.id }}" class="btn-del" href="javascript:;">删除</a></td>
 			</tr>
 			{% endfor %}
 		</table>
