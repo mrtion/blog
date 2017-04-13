@@ -64,7 +64,7 @@ app.use((req,res,next) => {
 app.use('/admin',adminRouter);	//后台路由
 app.use('/api',apiRouter);	//API路由
 app.use('/',mainRouter);	//前台路由
-
+//连接mongodb
 mongoose.connect('mongodb://localhost/blog',(err) => {
 	if(err){
 		console.log('connect fail!');
