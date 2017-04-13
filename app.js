@@ -34,6 +34,7 @@ app.use( bodyParser.urlencoded({ extended: false }) );
 
 //获取用户信息
 app.use( (req,res,next) =>{
+
 	req.cookie = new Cookies(req,res);
 	req.userInfo = null;
 	if(req.cookie.get('userInfo')){
@@ -46,6 +47,8 @@ app.use( (req,res,next) =>{
 		}catch(e){
 			console.log(e);
 		}
+	}else{
+		next()
 	}
 	
 } );

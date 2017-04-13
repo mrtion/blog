@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const moment = require('moment');
 //用户模型
 const User = require('../model/users');
 //栏目模型
@@ -89,7 +90,6 @@ router.post('/user/login',function(req,res,next){
 		"userName" : userName,
 		"password" : password
 	}).then((d) => {
-		console.log(d);
 		if(d){
 			resData.sts = 1;
 			resData.info = '登录成功';
@@ -263,21 +263,26 @@ router.post("/comment/add",(req,res) => {
 	let content = req.body.content;	//评论内容
 	let upDate = Date.now();	//更新时间
 
-	new Comments({
+	let detail = {
 		articleId: articleId,
 		articleTitle: articleTitle,
 		userId: userId,
 		userName: userName,
 		content: content,
 		upDate: upDate
-	}).save( (e) => {
+	}
+
+
+	new Comments(detail).save( (e) => {
 		if(e){
 			resData.sts = 0;
 			resData.info = '添加失败，请稍后再试';
 			res.status(404).json(resData)
 		}else{
+			detail.upDate = moment(detail['upDate']).format("YYYY-MM-DD HH:mm:ss");
 			resData.sts = 1;
 			resData.info = '添加成功';
+			resData.detail = detail
 			res.status(200).json(resData)
 		}
 	})

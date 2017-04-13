@@ -1,6 +1,7 @@
 $(function(){
 	$("#submitBtn").click(function(){
 		var textObj = $("#commentCon");
+		var cNubObj = $("#commNun");
 		var con = textObj.val();
 		var aId = textObj.attr('data-aId');
 		var aTitle = textObj.attr('data-aTitle');
@@ -20,8 +21,10 @@ $(function(){
 			},
 			success: function(d){
 				if(d && d.sts &&  d.sts == 1){
-					var li = `<li><p>用户：${uName}</p><p>${con}</p><p>时间：${new Date()}</p></li>`;
-					$(".comment-list ul").append(li);
+					cNubObj.text( parseInt(cNubObj.text())+1 );
+
+					var li = `<li class="clearfix"><div class="avatar fl"><img src="/public/images/avatar.jpg" /></div><div class="comment-com"><span class="user">${d.detail.userName}</span><span class="time">时间：${d.detail.upDate}</span><p class="con">${d.detail.content}</p></div></li>`;
+					$("#commentList li").eq(0).before(li);
 					textObj.val('');
 				}else{
 					alert(d.info);

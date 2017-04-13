@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>{{ title }}</title>
+		<link rel="stylesheet" type="text/css" href="/public/css/style.css" />
+		<link rel="stylesheet" type="text/css" href="/public/layui/css/layui.css">	
+	</head>
+	<body>
+		<!--  -->
+
+		<nav class="side-nav">
+			<h1 class="site-name">
+				<a href="/"><img src="https://75team.com/static/upload/20170409/logo.svg"><span>网首名称</span></a>
+			</h1>
+			<!-- 导航 -->
+			<ul class="com-nav">
+				<li>
+					<a href="/"><span>首页</span></a>
+				</li>
+				{% for v in nav %}
+				<li>
+					<a href="/list/{{ v.id }}"><span>{{ v.nodeName }}</span></a>
+				</li>
+				{% endfor %}
+			</ul>
+			<ul class="fast-tools clearfix" {% if userInfo %} style="display:none;"{% endif %}>
+				<li><a href="javascript:;" class="loginBtn">登录</a></li>
+				<li><a href="javascript:;" class="registerBtn">注册</a></li>
+			</ul>
+			<div class="rester-box hide" id="userInfo" {% if userInfo %} style="display:block;"{% endif %}>
+				<div class="item">你好， <span id="uName">{{userInfo.userName}}</span></div>
+				<div class="item hide in-item" {% if userInfo.userType == '1' %} style="display:block"{% endif %} ><a href="/admin">进入管理</a></div>
+				<div class="item"><a href="javascript:;" id="loginout">退出</a></div>
+			</div>
+		</nav>
+
+		<div class="main"> 
+			{% block content %} {% endblock %}
+			
+		</div>
+		<script type="text/javascript" src="/public/js/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="/public/layui/layui.js"></script>
+		<script type="text/javascript" src="/public/js/common.js"></script>
+		{% block script %} {% endblock %}
+	</body>
+</html>

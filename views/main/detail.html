@@ -1,140 +1,81 @@
-<!doctype html>
-<html>
-	<head>
-		<meta charset="utf-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>{{ title }}</title>
-		<link rel="stylesheet" type="text/css" href="/public/css/style.css" />
-		<script type="text/javascript" src="/public/js/jquery-1.11.3.min.js"></script>
-		<script type="text/javascript" src="/public/js/detail.js"></script>
-	</head>
-	<body>
-		<!--  -->
-		<nav class="side-nav">
-			<h1 class="site-name">
-				<a href="/"><img src="https://75team.com/static/upload/20170409/logo.svg"><span>网首名称</span></a>
-			</h1>
-			<!-- 导航 -->
-			<ul class="com-nav">
-				<li>
-					<a href="/"><span>首页</span></a>
-				</li>
-				{% for v in nav %}
-				<li>
-					<a href="/list/{{ v.id }}"><span>{{ v.nodeName }}</span></a>
-				</li>
-				{% endfor %}
-			</ul>
-			<ul class="fast-tools clearfix">
-				<li><a href="#">登录</a></li>
-				<li><a href="#">注册</a></li>
-			</ul>
-		</nav>
-
-		<div class="main">
-
-			<div class="contene">
-				<!-- 文章详情 -->
-				<div class="article-content">
-					<h1 class="title">{{ content.title }}</h1>
-					<!-- <div class="info">
-						作者：{{ content.author }}
-						来源：{{ content.source }}
-						发布时间：{{ content.upDated }}
-						所属分类：{{ nodeName }}
-					</div> -->
-					<div class="meta">
-						<div class="other">
-							<span class="author">{{ content.author }}</span>
-							发布于
-							<span class="author">5月15日,2016年</span>
-						</div>
-						<div class="comment">
-							<span class="number">25</span>comments
-						</div>
-					</div>
-					<div class="source">来源：<a class="detail" href="#">{{ content.source }}</a></div>
-					<div class="con">
-						{% autoescape false %}
-						    {{ content.content }}
-						{% endautoescape %}
-					</div>
-					<div class="post-info">
-			            作者 <code class="notebook">akira_cn</code> 发表于<i>2017-03-07 09:29:50</i>
-			        </div>
-				</div>
-				<nav class="pagination">
-                	<a href="#" class="prev">« 轻松管理你的 Node 版本</a>
-                	<a href="#" class="next">使用 webpack2 和 NPM Scripts 进行 JavaScript 组件开发 »</a>
-        		</nav>
-				<!-- 评论 -->
-				<div class="comments">
-					<h2 class="title">Comments</h2>
-					<div class="comments-input">
-						<div class="hd">
-							<span class="comments-num fr"><i>2</i> 人参与</span>
-							<h3 class="title">发布评论</h3>
-						</div>
-						<div class="bd">
-							<textarea class="tie-textarea" id="commentCon" data-aId="{{content.id}}" data-aTitle="{{content.title}}" data-uName="{{userInfo.userName}}" data-uId="{{userInfo.id}}" placeholder="请输出内容"></textarea>
-							<div class="user-info">
-								{% if ( userInfo) %}
-								<p class="be-login">你好：<i>{{userInfo.userName}}</i></p>
-								{% else %}
-								<p class="af-login">你还没有登录：<a href="javascript:;" id="loginBtn">请点击登录</a></p>
-								{% endif %}
-							</div>
-							<label class="sub-btn"><input type="button" id="submitBtn" value="提交" /></label>
-						</div>
-					</div>
-					
-				</div>
-				<!-- 评论列表 -->
-				<div class="comments-list">
-					<ul class="lists">
-						{% for item in commentList %}
-						<li class="clearfix">
-							<div class="avatar fl">
-								<img src="/public/images/avatar.jpg" />
-							</div>
-							<div class="comment-com">
-								<span class="user">{{ item.userName }}</span>
-								<span class="time">时间：{{ item.upDated }}</span>
-								<p class="con">{{ item.content }}</p>
-							</div>
-						</li>
-						{% endfor %}
-					</ul>
-				</div>
+{% extends './layout.html' %}
+{% block content %}
+<div class="contene">
+	<!-- 文章详情 -->
+	<div class="article-content">
+		<h1 class="title">{{ content.title }}</h1>
+		<!-- <div class="info">
+			作者：{{ content.author }}
+			来源：{{ content.source }}
+			发布时间：{{ content.upDated }}
+			所属分类：{{ nodeName }}
+		</div> -->
+		<div class="meta">
+			<div class="other">
+				<span class="author">{{ content.author }}</span>
+				发布于
+				<span class="author">{{ content.updated }}</span>
 			</div>
-			<div class="side">
-				{% if ( !userInfo) %}
-				<div class="rester-box" id="register" style="display:none;">
-					<div class="hd">注册</div>
-					<div class="item"><label class="tit">用户名：</label><label><input type="text" id="userName"></label></div>
-					<div class="item"><label class="tit">密码：</label><label><input type="password" id="password"></label></div>
-					<div class="item"><label class="tit">重复密码：</label><label><input type="password" id="repassword"></label></div>
-					<div class="item btn"><label class="tit"></label><input type="button" id="submit" value="注册"></div>
-				</div>
-				<div class="rester-box" id="login">
-					<div class="hd">登录</div>
-					<div class="item"><label class="tit">用户名：</label><label><input type="text" id="loginName"></label></div>
-					<div class="item"><label class="tit">密码：</label><label><input type="password" id="loginPassword"></label></div>
-					<div class="item btn"><label class="tit"></label><input type="button" id="loginBtn" value="登录"></div>
-				</div>
-				{% else %}
-				<div class="rester-box" id="userInfo">
-					<div class="hd">用户信息</div>
-					<div class="item"><label class="tit">用户名：</label><label id="uName">{{userInfo.userName}}</label></div>
-					{% if ( userInfo.userType != "1" ) %}
-					<div class="item">你好，欢迎来到火星！</div>
-					{% else %}
-					<div class="item">你好，欢迎来到火星！<a href="/admin">进入管理</a></div>
-					{% endif %}
-					<div class="item"><a href="javascript:;" id="loginout">退出</a></div>
-				</div>
-				{% endif %}
+			<div class="comment">
+				<span class="number">{{ commentList.length }}</span>comments
 			</div>
 		</div>
-	</body>
-</html>
+		<div class="source">来源：<a class="detail" href="javascript:;">{{ content.source }}</a></div>
+		<div class="con">
+			{% autoescape false %}
+			    {{ content.content }}
+			{% endautoescape %}
+		</div>
+		<div class="post-info">
+            作者 <code class="notebook">{{ content.author }}</code> 发表于<i> {{ content.updated2 }}</i>
+        </div>
+	</div>
+	<nav class="pagination">
+    	<a href="#" class="prev">« 轻松管理你的 Node 版本</a>
+    	<a href="#" class="next">使用 webpack2 和 NPM Scripts 进行 JavaScript 组件开发 »</a>
+	</nav>
+	<!-- 评论 -->
+	<div class="comments">
+		<h2 class="title">Comments</h2>
+		<div class="comments-input">
+			<div class="hd">
+				<span class="comments-num fr"><i id="commNun">{{ commentList.length }}</i> 人参与</span>
+				<h3 class="title">发布评论</h3>
+			</div>
+			<div class="bd">
+				<textarea class="tie-textarea" id="commentCon" data-aId="{{content.id}}" data-aTitle="{{content.title}}" data-uName="{{userInfo.userName}}" data-uId="{{userInfo.id}}" placeholder="请输出内容"></textarea>
+				<div class="user-info">
+					{% if ( userInfo) %}
+					<p class="be-login">你好：<i>{{userInfo.userName}}</i></p>
+					{% else %}
+					<p class="af-login">你还没有登录：<a href="javascript:;" id="loginBtn">请点击登录</a></p>
+					{% endif %}
+				</div>
+				<label class="sub-btn"><input type="button" id="submitBtn" value="提交" /></label>
+			</div>
+		</div>
+		
+	</div>
+	<!-- 评论列表 -->
+	<div class="comments-list">
+		<ul class="lists" id="commentList">
+			{% for item in commentList %}
+			<li class="clearfix">
+				<div class="avatar fl">
+					<img src="/public/images/avatar.jpg" />
+				</div>
+				<div class="comment-com">
+					<span class="user">{{ item.userName }}</span>
+					<span class="time">时间：{{ item.updated }}</span>
+					<p class="con">{{ item.content }}</p>
+				</div>
+			</li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript" src="/public/js/detail.js"></script>
+{% endblock %}

@@ -36,6 +36,8 @@ a:hover{color:#2479CC;text-decoration:none;}
 .fast-tools li:first-child{text-align:right;}
 .fast-tools li a{color:#fff;font-size:14px;}
 
+.rester-box{padding-top:20px;color:#fff;text-align:center;line-height:25px;}
+.rester-box a{color:#fff;}
 
 .main{width:1200px;padding-left:290px;padding-right:40px;box-sizing:border-box;}
 
@@ -94,3 +96,9 @@ a:hover{color:#2479CC;text-decoration:none;}
 .comments-list .comment-com .user{font-size:14px;color:#3873d1;}
 .comments-list .comment-com .time{position:absolute;right:10px;top:0;font-size:12px;color:#c9c9c9;}
 .comments-list .comment-com p.con{line-height:24px;padding:10px 0 30px 0;word-wrap: break-word;}
+
+body .yourclass{width:420px; min-height:230px; box-shadow: none;}
+body .yourclass .layui-layer-content{padding-bottom:10px;}
+body .yourclass .layui-form-label{width:80px;}
+.yourclass .layui-form-tit{height:40px;line-height:40px;padding:0 20px;margin-bottom:20px;font-size:16px;border-bottom:1px solid #ddd;background-color:#eee;}
+.yourclass .register a{padding-left:50px;}
