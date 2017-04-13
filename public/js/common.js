@@ -137,6 +137,7 @@ $(function(){
 								$("#uName").text(db.userInfo.userName);
 								$('.fast-tools').hide();
 								$('.rester-box,.in-item').show();
+								detailLogin && detailLogin(db.userInfo);
 							}
 						}else{
 							layer.msg(db.info, {icon: 2});

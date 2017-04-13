@@ -96,6 +96,7 @@ router.post('/user/login',function(req,res,next){
 
 			userInfo.userName = d.userName;
 			userInfo.id = d._id;
+			userInfo.userType = d.userType;
 			resData.userInfo = userInfo;
 			req.cookie.set('userInfo',JSON.stringify(userInfo))
 			res.status(200).json(resData);

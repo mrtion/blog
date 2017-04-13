@@ -7,6 +7,7 @@ $(function(){
 		var aTitle = textObj.attr('data-aTitle');
 		var uId = textObj.attr('data-uId');
 		var uName = textObj.attr('data-uName');
+		var lis = $("#commentList li");
 
 		$.ajax({
 			type: 'post',
@@ -24,7 +25,13 @@ $(function(){
 					cNubObj.text( parseInt(cNubObj.text())+1 );
 
 					var li = `<li class="clearfix"><div class="avatar fl"><img src="/public/images/avatar.jpg" /></div><div class="comment-com"><span class="user">${d.detail.userName}</span><span class="time">时间：${d.detail.upDate}</span><p class="con">${d.detail.content}</p></div></li>`;
-					$("#commentList li").eq(0).before(li);
+					
+					if(lis.length > 0){
+						lis.eq(0).before(li);
+					}else{
+						$("#commentList").append(li);
+					}
+
 					textObj.val('');
 				}else{
 					alert(d.info);
@@ -34,3 +41,17 @@ $(function(){
 
 	});
 });
+
+
+function detailLogin(userInfo){
+	if(userInfo){
+		$('.no-login').hide();
+		$('#deUserName').text(userInfo.userName);
+		$("#commentCon").attr("data-uName",userInfo.userName).attr("data-uId",userInfo.id)
+		if(userInfo.userType=="0"){
+			$('.in-item').hide();
+		}
+		$('.sub-comment').show();
+	}
+	
+}
